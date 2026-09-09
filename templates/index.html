@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Churn Predictor | Telecom Churn AI</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar/Header -->
+        <header class="app-header">
+            <div class="logo">
+                <i class="fa-solid fa-chart-line-up fa-fade"></i>
+                <h1>Predict<span>Churn</span></h1>
+            </div>
+            <p class="subtitle">Telecom Churn Predictive Analytics System</p>
+            <div class="metrics-summary">
+                <div class="metric-card">
+                    <span class="metric-val">74.2%</span>
+                    <span class="metric-label">Model Accuracy</span>
+                </div>
+                <div class="metric-card">
+                    <span class="metric-val">Random Forest</span>
+                    <span class="metric-label">Engine</span>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Dashboard Content -->
+        <main class="dashboard-main">
+            <!-- Left Panel: Input Form -->
+            <section class="form-section">
+                <form id="predictForm" class="predict-form">
+                    <h2 class="section-title"><i class="fa-solid fa-user-gear"></i> Customer Profile</h2>
+                    
+                    <!-- Section 1: Demographics -->
+                    <div class="form-group-section">
+                        <h3>Demographics</h3>
+                        <div class="form-grid-3">
+                            <div class="input-control">
+                                <label for="gender">Gender</label>
+                                <select id="gender" name="gender" required>
+                                    <option value="Female">Female</option>
+                                    <option value="Male">Male</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="SeniorCitizen">Senior Citizen</label>
+                                <select id="SeniorCitizen" name="SeniorCitizen" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="Partner">Partner</label>
+                                <select id="Partner" name="Partner" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="Dependents">Dependents</label>
+                                <select id="Dependents" name="Dependents" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 2: Services -->
+                    <div class="form-group-section">
+                        <h3>Services Subscribed</h3>
+                        <div class="form-grid-3">
+                            <div class="input-control">
+                                <label for="PhoneService">Phone Service</label>
+                                <select id="PhoneService" name="PhoneService" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="MultipleLines">Multiple Lines</label>
+                                <select id="MultipleLines" name="MultipleLines" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No phone service">No phone service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="InternetService">Internet Service</label>
+                                <select id="InternetService" name="InternetService" required>
+                                    <option value="DSL">DSL</option>
+                                    <option value="Fiber optic">Fiber optic</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="OnlineSecurity">Online Security</label>
+                                <select id="OnlineSecurity" name="OnlineSecurity" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="OnlineBackup">Online Backup</label>
+                                <select id="OnlineBackup" name="OnlineBackup" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="DeviceProtection">Device Protection</label>
+                                <select id="DeviceProtection" name="DeviceProtection" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="TechSupport">Tech Support</label>
+                                <select id="TechSupport" name="TechSupport" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="StreamingTV">Streaming TV</label>
+                                <select id="StreamingTV" name="StreamingTV" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="StreamingMovies">Streaming Movies</label>
+                                <select id="StreamingMovies" name="StreamingMovies" required>
+                                    <option value="No">No</option>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No internet service">No internet service</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Section 3: Billing & Contract -->
+                    <div class="form-group-section">
+                        <h3>Contract & Account</h3>
+                        <div class="form-grid-3">
+                            <div class="input-control">
+                                <label for="Contract">Contract</label>
+                                <select id="Contract" name="Contract" required>
+                                    <option value="Month-to-month">Month-to-month</option>
+                                    <option value="One year">One year</option>
+                                    <option value="Two year">Two year</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="PaperlessBilling">Paperless Billing</label>
+                                <select id="PaperlessBilling" name="PaperlessBilling" required>
+                                    <option value="Yes">Yes</option>
+                                    <option value="No">No</option>
+                                </select>
+                            </div>
+                            <div class="input-control">
+                                <label for="PaymentMethod">Payment Method</label>
+                                <select id="PaymentMethod" name="PaymentMethod" required>
+                                    <option value="Electronic check">Electronic check</option>
+                                    <option value="Mailed check">Mailed check</option>
+                                    <option value="Bank transfer (automatic)">Bank transfer (automatic)</option>
+                                    <option value="Credit card (automatic)">Credit card (automatic)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Sliders/Numeric inputs -->
+                        <div class="form-grid-2">
+                            <div class="input-control range-control">
+                                <div class="range-labels">
+                                    <label for="tenure">Tenure (Months)</label>
+                                    <span id="tenureVal" class="range-bubble">12</span>
+                                </div>
+                                <input type="range" id="tenure" name="tenure" min="1" max="72" value="12" class="slider">
+                            </div>
+                            <div class="input-control range-control">
+                                <div class="range-labels">
+                                    <label for="MonthlyCharges">Monthly Charges ($)</label>
+                                    <span id="MonthlyChargesVal" class="range-bubble">70.00</span>
+                                </div>
+                                <input type="range" id="MonthlyCharges" name="MonthlyCharges" min="18" max="120" value="70" step="0.5" class="slider">
+                            </div>
+                        </div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">Predict Churn Risk</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+            </section>
+
+            <!-- Right Panel: Results -->
+            <section class="results-section">
+                <!-- Idle State Panel -->
+                <div class="idle-panel" id="idlePanel">
+                    <i class="fa-light fa-radar fa-5x pulses-icon"></i>
+                    <h2>Awaiting Predictor Input</h2>
+                    <p>Modify customer profile parameters and click "Predict Churn Risk" to see the churn risk assessment.</p>
+                </div>
+
+                <!-- Loading State Panel -->
+                <div class="loading-panel hidden" id="loadingPanel">
+                    <div class="spinner"></div>
+                    <h2>Calculating Churn Risk...</h2>
+                    <p>Consulting our trained Random Forest model...</p>
+                </div>
+
+                <!-- Result Content Panel -->
+                <div class="results-card hidden" id="resultsCard">
+                    <h2 class="section-title"><i class="fa-solid fa-chart-pie"></i> Risk Evaluation</h2>
+                    
+                    <!-- Churn Probability Gauge Area -->
+                    <div class="gauge-area">
+                        <div class="progress-ring-container">
+                            <svg class="progress-ring" width="160" height="160">
+                                <circle class="progress-ring-bg" stroke="#1f293d" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"/>
+                                <circle class="progress-ring-circle" id="riskRing" stroke="#10b981" stroke-width="12" fill="transparent" r="70" cx="80" cy="80"/>
+                            </svg>
+                            <div class="gauge-center">
+                                <span class="probability-pct" id="riskPct">0%</span>
+                                <span class="probability-label">Churn Prob.</span>
+                            </div>
+                        </div>
+                        <div class="risk-badge-container">
+                            <span class="risk-badge" id="riskLevel">LOW RISK</span>
+                        </div>
+                    </div>
+
+                    <!-- Risk Contributing Factors -->
+                    <div class="risk-factors-container">
+                        <h3><i class="fa-solid fa-shield-halved"></i> Risk Attribution Factors</h3>
+                        <div class="factors-list" id="factorsList">
+                            <!-- Injected dynamically by JS -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <footer class="app-footer">
+            <p>&copy; 2026 Customer Churn Prediction System. Powered by Scikit-Learn Random Forest Classifier.</p>
+        </footer>
+    </div>
+
+    <!-- Custom Script -->
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>
